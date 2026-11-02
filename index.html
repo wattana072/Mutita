@@ -79,13 +79,25 @@
       animation: floatSlow 4s ease-in-out infinite;
     }
     /* ซ่อนป้าย Powered by Netlify อัตโนมัติ */
+    #nl-badge-frame,
+    iframe[id*="nl-badge"],
+    iframe[title*="Netlify" i],
+    iframe[src*="netlify"],
     a[href*="netlify.com"],
     div[class*="netlify"],
-    iframe[src*="netlify"] {
+    [data-netlify-badge],
+    netlify-drawer,
+    #netlify-feedback-drawer,
+    .netlify-badge {
       display: none !important;
       visibility: hidden !important;
       opacity: 0 !important;
       pointer-events: none !important;
+      width: 0 !important;
+      height: 0 !important;
+      position: absolute !important;
+      clip: rect(0, 0, 0, 0) !important;
+      transform: scale(0) !important;
     }
   </style>
 </head>
@@ -1858,6 +1870,25 @@
       switchAdminSubTab('tasks');
       refreshFromServer();
     });
+
+    // ซ่อน/ลบป้าย Netlify Badge ออกจาก DOM อัตโนมัติ
+    const removeNetlifyBadge = () => {
+      const selectors = [
+        '#nl-badge-frame',
+        'iframe[id*="nl-badge"]',
+        'iframe[title*="Netlify" i]',
+        'iframe[src*="netlify"]',
+        '[data-netlify-badge]',
+        'netlify-drawer',
+        '#netlify-feedback-drawer'
+      ];
+      selectors.forEach(sel => {
+        document.querySelectorAll(sel).forEach(el => el.remove());
+      });
+    };
+    removeNetlifyBadge();
+    const netlifyObserver = new MutationObserver(removeNetlifyBadge);
+    netlifyObserver.observe(document.documentElement, { childList: true, subtree: true });
   </script>
 </body>
 </html>
