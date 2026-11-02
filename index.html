@@ -78,6 +78,15 @@
     .float-badge {
       animation: floatSlow 4s ease-in-out infinite;
     }
+    /* ซ่อนป้าย Powered by Netlify อัตโนมัติ */
+    a[href*="netlify.com"],
+    div[class*="netlify"],
+    iframe[src*="netlify"] {
+      display: none !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
   </style>
 </head>
 <body class="antialiased selection:bg-sky-200 selection:text-sky-900 pb-20">
